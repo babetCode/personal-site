@@ -8,13 +8,13 @@ displayTitle = true
 displayLogo = true
 
 [params.navbar.logo]
-path = "images/logo.png"
+path = "images/B-gold.webp"
 link = "/"
 width = 40
 height = 20
 
 [params]
-favicon = "images/logo.png"
+favicon = "images/B-gold.webp"
 
 [[menu.main]]
 name = "Projects"
