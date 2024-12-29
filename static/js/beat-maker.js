@@ -5,10 +5,10 @@ class BeatMaker {
         this.isPlaying = false;
         this.currentStep = 0;
         this.tracks = [
-            { name: 'Kick', buffer: null, url: '../sounds/kick.wav' },
-            { name: 'Snare', buffer: null, url: '../sounds/snare.wav' },
-            { name: 'Hi-Hat', buffer: null, url: '../sounds/hihat.wav' },
-            { name: 'Clap', buffer: null, url: '../sounds/clap.wav' }
+            { name: 'Kick', buffer: null, url: '/sounds/kick.wav' },
+            { name: 'Snare', buffer: null, url: '/sounds/snare.wav' },
+            { name: 'Hi-Hat', buffer: null, url: '/sounds/hihat.wav' },
+            { name: 'Clap', buffer: null, url: '/sounds/clap.wav' }
         ];
         this.grid = this.tracks.map(() => new Array(16).fill(false));
         

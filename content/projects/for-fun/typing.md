@@ -5,4 +5,4 @@ title = 'Typing'
 breadcrumbs = true
 +++
 
-under construction
+{{< typing-test >}}

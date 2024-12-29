@@ -7,3 +7,5 @@ breadcrumbs = false
 [cascade]
 type = 'docs'
 +++
+
+Here are some projects just for fun.
