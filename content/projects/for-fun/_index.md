@@ -5,10 +5,8 @@ title = 'For Fun'
 breadcrumbs = true
 +++
 
-Here are some fun projects
-
 {{< cards >}}
-  {{< card link="/projects/for-fun/snake-game/" title="Snake Game" image="/images/snake.jpg" >}}
-  {{< card link="/projects/for-fun/beat-maker/" title="Beat Maker" image="/images/drums.jpg" >}}
-  {{< card link="/projects/for-fun/typing-test/" title="Beat Maker" image="/images/keyboard.jpg" >}}
+  {{< card link="/projects/for-fun/snake-game/" title="Snake Game" image="/images/snake-icon3.png" >}}
+  {{< card link="/projects/for-fun/beat-maker/" title="Beat Maker" image="/images/drum-icon3.png" >}}
+  {{< card link="/projects/for-fun/typing-test/" title="Typing Test" image="/images/keyboard-icon.png" >}}
 {{< /cards >}}
