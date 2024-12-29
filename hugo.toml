@@ -31,10 +31,3 @@ name = "Search"
 weight = 3
 [menu.main.params]
 type = "search"
-
-[[menu.main]]
-name = "GitHub"
-weight = 4
-url = "https://github.com/babetcode"
-[menu.main.params]
-icon = "github"
