@@ -1,0 +1,26 @@
+<!-- Snake Game Section -->
+<div class="flex flex-col items-center">
+    <p>Use ←↑↓→ or WASD to control the snake</p>
+    
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas" 
+            width="400" 
+            height="400" 
+            class="border-4 border-blue-400 rounded-lg mb-4">
+    </canvas>
+
+    <!-- Game Controls -->
+    <div class="flex space-x-4">
+        <button id="startButton" 
+                class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-300 transition">
+            Start Game
+        </button>
+    </div>
+
+    <!-- Score Display -->
+    <div class="mt-4 text-lg font-semibold">
+        Score: <span id="scoreDisplay">0</span>
+    </div>
+</div>
+
+<script defer src="/js/snake.js"></script>

@@ -1,0 +1,7 @@
+<div id="{{ .Get "id" }}">
+    {{ .Inner }}
+</div>
+<script>
+    document.getElementById('{{ .Get "id" }}').style.color = 'blue';
+</script>
+  
