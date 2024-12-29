@@ -8,7 +8,7 @@ breadcrumbs = true
 Here are some fun projects
 
 {{< cards >}}
-  {{< card link="/" title="Beat Maker" image="/images/snake.jpg" >}}
-  {{< card link="/" title="Beat Maker" image="/images/drums.jpg" >}}
-  {{< card link="/" title="Beat Maker" image="/images/keyboard.jpg" >}}
+  {{< card link="/projects/for-fun/snake-game/" title="Snake Game" image="/images/snake.jpg" >}}
+  {{< card link="/projects/for-fun/beat-maker/" title="Beat Maker" image="/images/drums.jpg" >}}
+  {{< card link="/projects/for-fun/typing-test/" title="Beat Maker" image="/images/keyboard.jpg" >}}
 {{< /cards >}}
