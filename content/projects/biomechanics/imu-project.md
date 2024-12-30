@@ -197,7 +197,7 @@ $\mathbf B$ and $\mathbf u$ are new to us. They let us model control inputs to t
 >
 >$\mathbf H$ is the measurement function. We haven't seen this yet in this book and I'll explain it later. If you mentally remove $\mathbf H$ from the equations, you should be able to see these equations are similar as well.
 >
->$\mathbf z,\, \mathbf R$ are the measurement mean and noise covariance. They correspond to $z$ and $\sigma_z^2$ in the univariate filter (I've substituted $\mu$ with $x$ for the univariate equations to make the notation as similar as possible).
+>$\mathbf z, \mathbf R$ are the measurement mean and noise covariance. They correspond to $z$ and $\sigma_z^2$ in the univariate filter (I've substituted $\mu$ with $x$ for the univariate equations to make the notation as similar as possible).
 >
 >$\mathbf y$ and $\mathbf K$ are the residual and Kalman gain.
 >
@@ -233,7 +233,6 @@ $$
 
 The state covariance $\mathbf P$ will be a 16x16 (or 13x13) matrix which represents the covariance of the state. A reasonable $\mathbf P_0$ would be:
 $$
-\mathbf P_0 =
 \begin{bmatrix}
 \sigma_{p_0^{\text{N}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
 0 & \sigma_{p_0^{\text{E}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
@@ -269,19 +268,19 @@ There are a few things we want $\mathbf F$ to do.
 
 1. <b><u>Position Update</u></b>
 
-If $dt$ is the time between measurements, then we want it to update the postion $\mathbf p = \left[p^\text{N}_k, p^\text{E}_k, p^\text{D}_k\right]^T$ in a way that satisfies
+If $dt$ is the time between measurements, then we want it to update the postion $\mathbf p = \left[p_k^\text{N}, p_k^\text{E}, p_k^\text{D}\right]^T$ in a way that satisfies
 $$
 \mathbf p_{k+1} = \mathbf p_k + (\mathbf v_k)dt,
 $$ 
-where $\mathbf v = \left[v^\text{N}_k, v^\text{E}_k, v^\text{D}_k\right]^T$, and $dt$ is the time step between measurements. This expands to
+where $\mathbf v = \left[v_k^\text{N}, v_k^\text{E}, v_k^\text{D}\right]^T$, and $dt$ is the time step between measurements. This expands to
 $$
-\begin{bmatrix}p^\text N_{k+1}\\p^\text E_{k+1}\\p^\text D_{k+1}\end{bmatrix} = \begin{bmatrix}p^\text N_{k}\\p^\text E_{k}\\p^\text D_{k}\end{bmatrix} + \begin{bmatrix}v^\text N_{k}\\v^\text E_{k}\\v^\text D_{k}\end{bmatrix}dt.
+\begin{bmatrix}p^\text N_{k+1}\\ p^\text E_{k+1}\\ p^\text D_{k+1}\end{bmatrix} = \begin{bmatrix}p^\text N_{k}\\ p^\text E_{k}\\ p^\text D_{k}\end{bmatrix} + \begin{bmatrix}v^\text N_{k}\\ v^\text E_{k}\\ v^\text D_{k}\end{bmatrix}dt.
 $$
 Therefore, the top three rows of our matrix will be
 $$
 \begin{bmatrix}
-1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0&0\\
-0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0\\
+1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0&0\\\\
+0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0\\\\
 0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0
 \end{bmatrix}.
 $$
@@ -295,15 +294,15 @@ $$
 where the $-g$ term corrects for gravity. This expands to
 $$
 \begin{align*}
-\begin{bmatrix}v^\text N_{k+1}\\v^\text E_{k+1}\\v^\text D_{k+1}\end{bmatrix} &= \begin{bmatrix}v^\text N_{k}\\v^\text E_{k}\\v^\text D_{k}\end{bmatrix} + \left(\begin{bmatrix}a^\text N_{k}\\a^\text E_{k}\\a^\text D_{k}\end{bmatrix} - \begin{bmatrix}0\\0\\9.8\end{bmatrix}\right)dt, \\
-&= \begin{bmatrix}v^\text N_{k}\\v^\text E_{k}\\v^\text D_{k}\end{bmatrix} + \begin{bmatrix}a^\text N_{k}\\a^\text E_{k}\\a^\text D_{k}-9.8\end{bmatrix}dt,
+\begin{bmatrix}v_{k+1}^\text N\\ v_{k+1}^\text E\\ v_{k+1}^\text D\end{bmatrix} &= \begin{bmatrix}v_{k}^\text N\\ v_{k}^\text E\\ v_{k}^\text D\end{bmatrix} + \left(\begin{bmatrix}a_{k}^\text N\\ a_{k}^\text E\\ a_{k}^\text D\end{bmatrix} - \begin{bmatrix}0\\ 0\\ 9.8\end{bmatrix}\right)dt, \\\\
+&= \begin{bmatrix}v_{k}^\text N\\ v_{k}^\text E\\ v_{k}^\text D\end{bmatrix} + \begin{bmatrix}a_{k}^\text N\\ a_{k}^\text E\\ a_{k}^\text D-9.8\end{bmatrix}dt,
 \end{align*}
 $$
 Since the resulting $-dt$ term at the bottom of the vector is non linearly dependent on the components of $\mathbf x$, we can model gravity's input to the system by letting $\mathbf{Bu}$ subtract $9.8(dt)$ from the $v^\text D$ component of $\mathbf x$ in the state update equation , and the next three rows of our matrix will be
 $$
 \begin{bmatrix}
-0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0\\
-0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0\\
+0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0\\\\
+0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0\\\\
 0&0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0
 \end{bmatrix}.
 $$
@@ -317,8 +316,8 @@ $$
 Therefore, next three rows of our matrix will be
 $$
 \begin{bmatrix}
-0&0&0&0&0&0&1&0&0&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&0&1&0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&1&0&0&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&0&1&0&0&0&0&0&0&0&0\\\\
 0&0&0&0&0&0&0&0&1&0&0&0&0&0&0&0
 \end{bmatrix}.
 $$
@@ -342,73 +341,73 @@ $$
 is calculated using the formula:
 $$
 \begin{align*}
-\mathbf q=\mathbf q_1 \otimes \mathbf q_2=&\ \ \ \left(w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2\right) \\
-&+ \left(w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2\right)i \\
-&+ \left(w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2\right)j \\
+\mathbf q=\mathbf q_1 \otimes \mathbf q_2=&\ \ \ \left(w_1w_2 - x_1x_2 - y_1y_2 - z_1z_2\right) \\\\
+&+ \left(w_1x_2 + x_1w_2 + y_1z_2 - z_1y_2\right)i \\\\
+&+ \left(w_1y_2 - x_1z_2 + y_1w_2 + z_1x_2\right)j \\\\
 &+ \left(w_1z_2 + x_1y_2 - y_1x_2 + z_1w_2\right)k.
 \end{align*}
 $$
 Substituting
 $$
 \begin{align*}
-\begin{bmatrix}w_1\\x_1\\y_1\\z_1\end{bmatrix} &= \begin{bmatrix}q^0_k\\q^1_k\\q^2_k\\q^3_k\end{bmatrix},\\
-\begin{bmatrix}w_2\\x_2\\y_2\\z_2\end{bmatrix} &= \begin{bmatrix}0 \\ \omega^N_k \\ \omega^E_k \\ \omega^D_k\end{bmatrix},
+\begin{bmatrix}w_1\\ x_1\\ y_1\\ z_1\end{bmatrix} &= \begin{bmatrix}q^0_k\\ q^1_k\\ q^2_k\\ q^3_k\end{bmatrix},\\\\
+\begin{bmatrix}w_2\\ x_2\\ y_2\\ z_2\end{bmatrix} &= \begin{bmatrix}0 \\ \omega^N_k \\ \omega^E_k \\ \omega^D_k\end{bmatrix},
 \end{align*}
 $$
 gives
 $$
 \begin{align*}
-\mathbf q_k\otimes\begin{bmatrix}0 \\ \omega^N_k \\ \omega^E_k \\ \omega^D_k\end{bmatrix} &= \begin{bmatrix}q^0_k\\q^1_k\\q^2_k\\q^3_k\end{bmatrix}\begin{bmatrix}0 \\ \omega^N_k \\ \omega^E_k \\ \omega^D_k\end{bmatrix} \\
-&=\ \ \ \left(q^0_k0 - q^1_k\omega^N_k - q^2_k\omega^E_k - q^3_k\omega^D_k\right)  \\
-&\ \ \ \ + \left(q^0_k\omega^N_k + q^1_k0 + q^2_k\omega^D_k - q^3_k\omega^E_k\right)i  \\
-&\ \ \ \ + \left(q^0_k\omega^E_k - q^1_k\omega^D_k + q^2_k0 + q^3_k\omega^N_k\right)j  \\
+\mathbf q_k\otimes\begin{bmatrix}0 \\ \omega^N_k \\ \omega^E_k \\ \omega^D_k\end{bmatrix} &= \begin{bmatrix}q^0_k\\ q^1_k\\ q^2_k\\ q^3_k\end{bmatrix}\begin{bmatrix}0 \\ \omega^N_k \\ \omega^E_k \\ \omega^D_k\end{bmatrix} \\\\
+&=\ \ \ \left(q^0_k0 - q^1_k\omega^N_k - q^2_k\omega^E_k - q^3_k\omega^D_k\right)  \\\\
+&\ \ \ \ + \left(q^0_k\omega^N_k + q^1_k0 + q^2_k\omega^D_k - q^3_k\omega^E_k\right)i  \\\\
+&\ \ \ \ + \left(q^0_k\omega^E_k - q^1_k\omega^D_k + q^2_k0 + q^3_k\omega^N_k\right)j  \\\\
 &\ \ \ \ + \left(q^0_k\omega^D_k + q^1_k\omega^E_k - q^2_k\omega^N_k + q^3_k0\right)k.
 \end{align*}
 $$
 Writing this result in vector form, we have
 $$
 \begin{bmatrix}
-(q^0_k)(0) &- (q^1_k)(\omega^N_k) &- (q^2_k)(\omega^E_k) &- (q^3_k)(\omega^D_k)  \\
-(q^0_k)(\omega^N_k) &+ (q^1_k)(0) &+ (q^2_k)(\omega^D_k) &- (q^3_k)(\omega^E_k)  \\
-(q^0_k)(\omega^E_k) &- (q^1_k)(\omega^D_k) &+ (q^2_k)(0) &+ (q^3_k)(\omega^N_k)  \\
-(q^0_k)(\omega^D_k) &+ (q^1_k)(\omega^E_k) &- (q^2_k)(\omega^N_k) &+ (q^3_k)(0) \\
+(q^0_k)(0) &- (q^1_k)(\omega^N_k) &- (q^2_k)(\omega^E_k) &- (q^3_k)(\omega^D_k)\\\\
+(q^0_k)(\omega^N_k) &+ (q^1_k)(0) &+ (q^2_k)(\omega^D_k) &- (q^3_k)(\omega^E_k)\\\\
+(q^0_k)(\omega^E_k) &- (q^1_k)(\omega^D_k) &+ (q^2_k)(0) &+ (q^3_k)(\omega^N_k)\\\\
+(q^0_k)(\omega^D_k) &+ (q^1_k)(\omega^E_k) &- (q^2_k)(\omega^N_k) &+ (q^3_k)(0)
 \end{bmatrix}.
 $$
 We see that each component is in the form $[a(q0_k)+b(q1_k)+c(q2_k)+d(q3_k)]$, for some constants $a$, $b$, $c$, and $d$. This is looking quite close to the form we would like for our state transition matrix! We can substite
 $$
 \mathbf q_k\otimes\begin{bmatrix}0 \\ \omega_x \\ \omega_y \\ \omega_z\end{bmatrix} = \begin{bmatrix}
-(q^0_k)(0) &- (q^1_k)(\omega^N_k) &- (q^2_k)(\omega^E_k) &- (q^3_k)(\omega^D_k)  \\
-(q^0_k)(\omega^N_k) &+ (q^1_k)(0) &+ (q^2_k)(\omega^D_k) &- (q^3_k)(\omega^E_k)  \\
-(q^0_k)(\omega^E_k) &- (q^1_k)(\omega^D_k) &+ (q^2_k)(0) &+ (q^3_k)(\omega^N_k)  \\
-(q^0_k)(\omega^D_k) &+ (q^1_k)(\omega^E_k) &- (q^2_k)(\omega^N_k) &+ (q^3_k)(0) \\
+(q^0_k)(0) &- (q^1_k)(\omega^N_k) &- (q^2_k)(\omega^E_k) &- (q^3_k)(\omega^D_k)\\\\
+(q^0_k)(\omega^N_k) &+ (q^1_k)(0) &+ (q^2_k)(\omega^D_k) &- (q^3_k)(\omega^E_k)\\\\
+(q^0_k)(\omega^E_k) &- (q^1_k)(\omega^D_k) &+ (q^2_k)(0) &+ (q^3_k)(\omega^N_k)\\\\
+(q^0_k)(\omega^D_k) &+ (q^1_k)(\omega^E_k) &- (q^2_k)(\omega^N_k) &+ (q^3_k)(0)
 \end{bmatrix}
 $$
 into our rotation update equation to get
 $$
 \mathbf q_{k+1} = \mathbf q_k+\frac12dt\cdot
 \begin{bmatrix}
-(q^0_k)(0) &- (q^1_k)(\omega^N_k) &- (q^2_k)(\omega^E_k) &- (q^3_k)(\omega^D_k)  \\
-(q^0_k)(\omega^N_k) &+ (q^1_k)(0) &+ (q^2_k)(\omega^D_k) &- (q^3_k)(\omega^E_k)  \\
-(q^0_k)(\omega^E_k) &- (q^1_k)(\omega^D_k) &+ (q^2_k)(0) &+ (q^3_k)(\omega^N_k)  \\
-(q^0_k)(\omega^D_k) &+ (q^1_k)(\omega^E_k) &- (q^2_k)(\omega^N_k) &+ (q^3_k)(0) \\
+(q^0_k)(0) &- (q^1_k)(\omega^N_k) &- (q^2_k)(\omega^E_k) &- (q^3_k)(\omega^D_k)\\\\
+(q^0_k)(\omega^N_k) &+ (q^1_k)(0) &+ (q^2_k)(\omega^D_k) &- (q^3_k)(\omega^E_k)\\\\
+(q^0_k)(\omega^E_k) &- (q^1_k)(\omega^D_k) &+ (q^2_k)(0) &+ (q^3_k)(\omega^N_k)\\\\
+(q^0_k)(\omega^D_k) &+ (q^1_k)(\omega^E_k) &- (q^2_k)(\omega^N_k) &+ (q^3_k)(0)
 \end{bmatrix}.
 $$
 
 Writing the whole right side as one vector gives
 $$
 \mathbf q_{k+1} = \begin{bmatrix}
-q^0_k + (dt/2)((q^0_k)(0) - (q^1_k)(\omega^N_k) - (q^2_k)(\omega^E_k) - (q^3_k)(\omega^D_k)) \\
-q^1_k + (dt/2)((q^0_k)(\omega^N_k) + (q^1_k)(0) + (q^2_k)(\omega^D_k) - (q^3_k)(\omega^E_k)) \\
-q^2_k + (dt/2)((q^0_k)(\omega^E_k) - (q^1_k)(\omega^D_k) + (q^2_k)(0) + (q^3_k)(\omega^N_k)) \\
-q^3_k + (dt/2)((q^0_k)(\omega^D_k) + (q^1_k)(\omega^E_k) - (q^2_k)(\omega^N_k) + (q^3_k)(0)) \\
+q^0_k + (dt/2)((q^0_k)(0) - (q^1_k)(\omega^N_k) - (q^2_k)(\omega^E_k) - (q^3_k)(\omega^D_k)) \\\\
+q^1_k + (dt/2)((q^0_k)(\omega^N_k) + (q^1_k)(0) + (q^2_k)(\omega^D_k) - (q^3_k)(\omega^E_k)) \\\\
+q^2_k + (dt/2)((q^0_k)(\omega^E_k) - (q^1_k)(\omega^D_k) + (q^2_k)(0) + (q^3_k)(\omega^N_k)) \\\\
+q^3_k + (dt/2)((q^0_k)(\omega^D_k) + (q^1_k)(\omega^E_k) - (q^2_k)(\omega^N_k) + (q^3_k)(0))
 \end{bmatrix}.
 $$
 Therefore, next four rows of our matrix will be
 $$
 \begin{bmatrix}
-0&0&0&0&0&0&0&0&0&1&-(dt\cdot\omega^N_k)/2&-(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&0&0&0\\
-0&0&0&0&0&0&0&0&0&(dt\cdot\omega^N_k)/2&1&(dt\cdot\omega^D_k)/2&-(dt\cdot\omega^E_k)/2&0&0&0\\
-0&0&0&0&0&0&0&0&0&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&1&(dt\cdot\omega^N_k)/2&0&0&0\\
+0&0&0&0&0&0&0&0&0&1&-(dt\cdot\omega^N_k)/2&-(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&(dt\cdot\omega^N_k)/2&1&(dt\cdot\omega^D_k)/2&-(dt\cdot\omega^E_k)/2&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&1&(dt\cdot\omega^N_k)/2&0&0&0\\\\
 0&0&0&0&0&0&0&0&0&(dt\cdot\omega^D_k)/2&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^N_k)/2&1&0&0&0
 \end{bmatrix}.
 $$
@@ -421,8 +420,8 @@ $$
 Therefore, last three rows of our matrix will be
 $$
 \begin{bmatrix}
-0&0&0&0&0&0&0&0&0&0&0&0&0&1&0&0\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&0&1&0\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&1&0&0\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&0&1&0\\\\
 0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&1
 \end{bmatrix}.
 $$
@@ -430,22 +429,22 @@ $$
 We now have
 $$
 \mathbf F = \begin{bmatrix}
-1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0&0\\
-0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0\\
-0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0\\
-0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0\\
-0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0\\
-0&0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&1&0&0&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&0&1&0&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&0&0&1&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&0&0&0&1&-(dt\cdot\omega^N_k)/2&-(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&0&0&0\\
-0&0&0&0&0&0&0&0&0&(dt\cdot\omega^N_k)/2&1&(dt\cdot\omega^D_k)/2&-(dt\cdot\omega^E_k)/2&0&0&0\\
-0&0&0&0&0&0&0&0&0&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&1&(dt\cdot\omega^N_k)/2&0&0&0\\
-0&0&0&0&0&0&0&0&0&(dt\cdot\omega^D_k)/2&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^N_k)/2&1&0&0&0\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&1&0&0\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&0&1&0\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&1\\
+1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0&0\\\\
+0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0\\\\
+0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0\\\\
+0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0\\\\
+0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&1&0&0&dt&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&1&0&0&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&0&1&0&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&0&0&1&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&1&-(dt\cdot\omega^N_k)/2&-(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&(dt\cdot\omega^N_k)/2&1&(dt\cdot\omega^D_k)/2&-(dt\cdot\omega^E_k)/2&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^D_k)/2&1&(dt\cdot\omega^N_k)/2&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&(dt\cdot\omega^D_k)/2&(dt\cdot\omega^E_k)/2&-(dt\cdot\omega^N_k)/2&1&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&1&0&0\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&0&1&0\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&1
 \end{bmatrix}.
 $$
 
@@ -460,22 +459,22 @@ The process noise covariance matrix $\mathbf Q$ represents the uncertainties in 
 $$
 \mathbf Q =
 \begin{bmatrix}
-\sigma^2_{p^{\text{N}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & \sigma^2_{p^{\text{E}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & \sigma^2_{p^{\text{D}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & \sigma^2_{v^{\text{N}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & \sigma^2_{v^{\text{E}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & \sigma^2_{v^{\text{D}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{N}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{E}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{D}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^0} & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^1} & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^2} & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^3} & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{N}}} & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{E}}} & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{D}}} \\
+0 & \sigma^2_{p^{\text{E}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+\sigma^2_{p^{\text{N}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & \sigma^2_{p^{\text{D}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & \sigma^2_{v^{\text{N}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & \sigma^2_{v^{\text{E}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & \sigma^2_{v^{\text{D}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{N}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{E}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{D}}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^0} & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^1} & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^2} & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^3} & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{N}}} & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{E}}} & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{D}}} 
 \end{bmatrix},
 $$
 Where: $\sigma^2_{p^\text N}$ is the variance in the north axis position, and so on and so forth. The specific values for these variances would depend on the characteristics of the system and the expected process noise.
