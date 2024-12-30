@@ -254,10 +254,6 @@ $$
 $$
 where $\sigma^2_{p^N_0}$ is the variance in the initial position in the north direction, and so on and so forth. As a general rule of thumb, it will be better to overestimate than underestimate - the filter will converge if $\mathbf P_0$ is too large, but might not if it's too small.
 
-
-{{< callout type="warning" >}}
-  The latex below this point is still being formated.
-{{< /callout >}}
 ## Process
 
 The process of the kalman filter is described by $\mathbf F$ (the state transition function) and $\mathbf Q$ (the process covariance).
