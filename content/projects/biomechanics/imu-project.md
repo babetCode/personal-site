@@ -426,9 +426,9 @@ $$
 \end{bmatrix}.
 $$
 
-We now have
+We now have the matrix $\mathbf F$:
 $$
-\mathbf F = \begin{bmatrix}
+\begin{bmatrix}
 1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0&0\\\\
 0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0&0\\\\
 0&0&1&0&0&dt&0&0&0&0&0&0&0&0&0&0\\\\
@@ -479,53 +479,49 @@ $$
 $$
 Where: $\sigma^2_{p^\text N}$ is the variance in the north axis position, and so on and so forth. The specific values for these variances would depend on the characteristics of the system and the expected process noise.
 
-# Designing the Measurement: z, R
+## Measurement
 
 The kalman filter's measurment is described by the measurement mean $\mathbf z$, and the noise covariance $\mathbf R$.
 
-## z
+### z
 
 As described in the *Defining our State Variable* section, we will have
 $$
 \mathbf z_k = \left[a^{\text{pitch}}_k, a^{\text{roll}}_k, a^{\text{yaw}}_k, \omega^{\text{pitch}}_k, \omega^{\text{roll}}_k, \omega^{\text{yaw}}_k\right]^T.
 $$
 
-## R
+### R
 
 Since $\mathbf z$ is a 6x1 vector, $\mathbf R$ will be a 6x6 matrix representing the noise covariance of our measurements. A reasonable $\mathbf R$ would be:
 $$
 \mathbf R =
 \begin{bmatrix}
-\sigma^2_{a^{\text{pitch}}} & 0 & 0 & 0 & 0 & 0 \\
-0 & \sigma^2_{a^{\text{roll}}} & 0 & 0 & 0 & 0 \\
-0 & 0 & \sigma^2_{a^{\text{yaw}}} & 0 & 0 & 0 \\
-0 & 0 & 0 & \sigma^2_{\omega^{\text{pitch}}} & 0 & 0 \\
-0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{roll}}} & 0\\
+\sigma^2_{a^{\text{pitch}}} & 0 & 0 & 0 & 0 & 0 \\\\
+0 & \sigma^2_{a^{\text{roll}}} & 0 & 0 & 0 & 0 \\\\
+0 & 0 & \sigma^2_{a^{\text{yaw}}} & 0 & 0 & 0 \\\\
+0 & 0 & 0 & \sigma^2_{\omega^{\text{pitch}}} & 0 & 0 \\\\
+0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{roll}}} & 0\\\\
 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{yaw}}}
 \end{bmatrix},
 $$
 where $\sigma^2_{a^{\text{pitch}}}$ is the variance in the pitch acceleration measurements, and so on and so forth. If we expect the accelerometers and gyroscopes to have the same variance in all directions, we may choose to use a single value for $\sigma^2_a$ and a single value for $\sigma^2_{\omega}$.
 
-# Designing the Measurement Function: H
+## Measurement Function: H
 
 Our given forms of $\mathbf x_k$ and $\mathbf z_k$ mean we'll have some 6x16 measurement function $\mathbf H$ such that
 $$
 \mathbf y_k = \mathbf z_k - \left(\mathbf H \mathbf\cdot\mathbf x_k\right).
 $$
 
-Let's expand the right-hand side of this equation to visualize our $\mathbf H$ matrix here:
+Let's expand the $\left(\mathbf H \mathbf\cdot\mathbf x_k\right)$ term to visualize our $\mathbf H$ matrix here:
 $$
-\mathbf y_k =
-\begin{bmatrix}a^{\text{pitch}}_k \\ a^{\text{roll}}_k \\ a^{\text{yaw}}_k \\ \omega^{\text{pitch}}_k \\ \omega^{\text{roll}}_k \\ \omega^{\text{yaw}}_k\end{bmatrix}
--\begin{bmatrix}?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
-?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
-?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
-?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
-?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
+\begin{bmatrix}?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
+?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
+?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
+?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
+?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
 ?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\end{bmatrix}
-\begin{bmatrix}
-p^\text{N}_k \\ p^\text{E}_k \\ p^\text{D}_k \\ v^\text{N}_k \\ v^\text{E}_k \\ v^\text{D}_k \\ a^\text{N}_k \\ a^\text{E}_k \\ a^\text{D}_k \\ q^0_k \\ q^1_k \\ q^2_k \\ q^3_k \\ \omega^\text{N}_k \\ \omega^\text{E}_k \\ \omega^\text{D}_k
-\end{bmatrix}.
+\begin{bmatrix} p^\text{N}_k\\\\ p^\text{E}_k\\\\ p^\text{D}_k\\\\ v^\text{N}_k\\\\ v^\text{E}_k\\\\ v^\text{D}_k\\\\ a^\text{N}_k\\\\ a^\text{E}_k\\\\ a^\text{D}_k\\\\ q^0_k\\\\ q^1_k\\\\ q^2_k\\\\ q^3_k\\\\ \omega^\text{N}_k\\\\ \omega^\text{E}_k\\\\ \omega^\text{D}_k \end{bmatrix}.
 $$
 We see that the first three rows will be dotted with $\mathbf x_k$ to get the local acceleration, and the next three rows will be dotted with $\mathbf x_k$ to get the local rotational velocity. Using our $\mathbf C$ matrix from *Translating Between Local and World Axes*, we have
 $$
@@ -535,23 +531,23 @@ which expands to
 $$
 \begin{bmatrix}a^{\text{pitch}}_k \\ a^{\text{roll}}_k \\ a^{\text{yaw}}_k\end{bmatrix} =
 \begin{bmatrix}
-1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) & 2\big(q^1_k q^2_k - q^0_k q^3_k\big) & 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\
-2\big(q^1_k q^2_k + q^0_k q^3_k\big) & 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) & 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\
+1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) & 2\big(q^1_k q^2_k - q^0_k q^3_k\big) & 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\\\
+2\big(q^1_k q^2_k + q^0_k q^3_k\big) & 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) & 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\\\
 2\big(q^1_k q^3_k - q^0_k q^2_k\big) & 2\big(q^2_k q^3_k + q^0_k q^1_k\big) & 1 - 2\big((q^1_k)^2 + (q^2_k)^2\big)
 \end{bmatrix}^T
-\begin{bmatrix}a^{\text{N}}_k \\ a^{\text{E}}_k \\ a^{\text{D}}_k\end{bmatrix}.
+\begin{bmatrix}a^{\text{N}}_k \\\\ a^{\text{E}}_k \\\\ a^{\text{D}}_k\end{bmatrix}.
 $$
 To simplify things, let's define
 $$
 \begin{align*}
-c^0_k &= 1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) \\
-c^1_k &= 2\big(q^1_k q^2_k - q^0_k q^3_k\big) \\
-c^2_k &= 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\
-c^3_k &= 2\big(q^1_k q^2_k + q^0_k q^3_k\big) \\
-c^4_k &= 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) \\
-c^5_k &= 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\
-c^6_k &= 2\big(q^1_k q^3_k - q^0_k q^2_k\big) \\
-c^7_k &= 2\big(q^2_k q^3_k + q^0_k q^1_k\big) \\
+c^1_k &= 2\big(q^1_k q^2_k - q^0_k q^3_k\big) \\\\
+c^0_k &= 1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) \\\\
+c^2_k &= 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\\\
+c^3_k &= 2\big(q^1_k q^2_k + q^0_k q^3_k\big) \\\\
+c^4_k &= 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) \\\\
+c^5_k &= 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\\\
+c^6_k &= 2\big(q^1_k q^3_k - q^0_k q^2_k\big) \\\\
+c^7_k &= 2\big(q^2_k q^3_k + q^0_k q^1_k\big) \\\\
 c^8_k &= 1 - 2\big((q^1_k)^2 + (q^2_k)^2\big),
 \end{align*}
 $$
@@ -560,14 +556,14 @@ $$
 \begin{align*}
 \begin{bmatrix}a^{\text{pitch}}_k \\ a^{\text{roll}}_k \\ a^{\text{yaw}}_k\end{bmatrix} &=
 \begin{bmatrix}
-c^0_k & c^1_k & c^2_k \\
-c^3_k & c^4_k & c^5_k \\
+c^0_k & c^1_k & c^2_k \\\\
+c^3_k & c^4_k & c^5_k \\\\
 c^6_k & c^7_k & c^8_k
 \end{bmatrix}^T
 \begin{bmatrix}a^{\text{N}}_k \\ a^{\text{E}}_k \\ a^{\text{D}}_k\end{bmatrix}\\
 &= \begin{bmatrix}
-c^0_k & c^3_k & c^6_k \\
-c^1_k & c^4_k & c^7_k \\
+c^0_k & c^3_k & c^6_k \\\\
+c^1_k & c^4_k & c^7_k \\\\
 c^2_k & c^5_k & c^8_k
 \end{bmatrix}
 \begin{bmatrix}a^{\text{N}}_k \\ a^{\text{E}}_k \\ a^{\text{D}}_k\end{bmatrix}
@@ -576,11 +572,11 @@ $$
 From here, we can start to fill in the first three rows of $\mathbf H$:
 $$
 \mathbf H = \begin{bmatrix}
-0&0&0&0&0&0&c^0_k&c^3_k&c^6_k&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&c^1_k&c^4_k&c^7_k&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&c^2_k&c^5_k&c^8_k&0&0&0&0&0&0&0\\
-?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
-?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\
+0&0&0&0&0&0&c^0_k&c^3_k&c^6_k&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&c^1_k&c^4_k&c^7_k&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&c^2_k&c^5_k&c^8_k&0&0&0&0&0&0&0\\\\
+?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
+?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
 ?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?
 \end{bmatrix}
 $$
@@ -593,8 +589,8 @@ Which expands to
 $$
 \begin{bmatrix}\omega^{\text{pitch}}_k \\ \omega^{\text{roll}}_k \\ \omega^{\text{yaw}}_k\end{bmatrix} =
 \begin{bmatrix}
-c^0_k & c^3_k & c^6_k \\
-c^1_k & c^4_k & c^7_k \\
+c^0_k & c^3_k & c^6_k \\\\
+c^1_k & c^4_k & c^7_k \\\\
 c^2_k & c^5_k & c^8_k
 \end{bmatrix}
 \begin{bmatrix}\omega^{\text N}_k \\ \omega^{\text E}_k \\ \omega^{\text D}_k\end{bmatrix},
@@ -603,13 +599,11 @@ Meaning our matrix should look like
 $$
 \mathbf H =
 \begin{bmatrix}
-0&0&0&0&0&0&c^0_k&c^1_k&c^2_k&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&c^3_k&c^4_k&c^5_k&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&c^6_k&c^7_k&c^8_k&0&0&0&0&0&0&0\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&c^0_k&c^3_k&c^6_k\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&c^1_k&c^4_k&c^7_k\\
-0&0&0&0&0&0&0&0&0&0&0&0&0&c^2_k&c^5_k&c^8_k\\
+0&0&0&0&0&0&c^0_k&c^1_k&c^2_k&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&c^3_k&c^4_k&c^5_k&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&c^6_k&c^7_k&c^8_k&0&0&0&0&0&0&0\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&c^0_k&c^3_k&c^6_k\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&c^1_k&c^4_k&c^7_k\\\\
+0&0&0&0&0&0&0&0&0&0&0&0&0&c^2_k&c^5_k&c^8_k
 \end{bmatrix}.
 $$
-
-Below is the code to generate the matrix $\mathbf H$
