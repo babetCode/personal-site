@@ -1,11 +1,11 @@
 +++
 date = '2024-12-29T16:22:53-07:00'
-draft = true
-title = 'Introduction to Sensor Fusion'
+draft = false
 linktitle = 'IMU Gait Analysis'
 math = true
 +++
 
+## Introduction to IMU Gait Analysis
 Gait analysis—studying how people walk—is an important task in healthcare, sports, and rehabilitation. It helps us spot walking issues, track recovery progress, and even design better treatments for conditions like stroke or Parkinson's. One great tool for this is the 6-axis Inertial Measurement Unit (IMU). These devices combine a 3-axis accelerometer and a 3-axis gyroscope, and are very handy for collecting data about movement. You can stick them on a shoe, strap them to a leg, or embed them in a wearable to track how someone moves.
 
 But here's the catch: accelerometers and gyroscopes, while powerful, have their downsides. Accelerometers measure linear acceleration and can estimate how far someone moves or how fast, but they're noisy and can be thrown off by quick jolts or vibrations. Gyroscopes, which measure rotational velocity, are great for capturing smooth and precise turning motions, like the angle of a foot during a step. However, they tend to drift over time, leading to small errors that snowball into big ones.
@@ -14,7 +14,7 @@ This is where sensor fusion has a lot to offer. By combining data from both sens
 
 Benefits of accurate gait analysis include helping to predict falls in older adults, tracking how well a patient is recovering from surgery, or even fine-tuning athletic performance. Without sensor fusion, IMU data would be too messy or unreliable to perform these functions. With this little bit of background out of the way, let's dive deeper into how sensor fusion works in the context of the 6-axis IMU.
 
-# Defining our Measurement Variable
+## Defining the Measurement Variable
 
 When using an IMU for gait analysis, we would like to use the IMU's measurements to calculate heel-strike, toe-off, and stride length (and perhaps we'll add toe-down and heel-off if we're feeling ambitious). At any given time $k$, the IMU will give us accelerometer data along its three local axes. We can think of this accereration data as a vector $\mathbf a^\text{local}$, where at time $k$, we have
 $$
@@ -31,19 +31,19 @@ $$
 
 It's important to keep in mind that these measurements are with respect to the local frame of the IMU, and not the world frame.
 
-# Defining our State Variable
+## Defining the State Variable
 
 In order to determine when and how gait events happen, we would need to know the IMU's position and orientation in world frame axes, such as north($N$)-east($E$)-down($D$) axes. Additionally, it would be nice to have the IMU's velocity and acceleration in the world frame. To visualize this, we could assign variables to position, linear velocity, linear acceleration, orientation, and angular velocity, like this:
 
 $$\begin{align*}
-\mathbf p^{\text{world}}_k &= \left[p^{\text{N}}_k, p^{\text{E}}_k, p^{\text{D}}_k\right]^T, \\
-\mathbf v^{\text{world}}_k &= \left[v^{\text{N}}_k, v^{\text{E}}_k, v^{\text{D}}_k\right]^T, \\
-\mathbf a^{\text{world}}_k &= \left[a^{\text{N}}_k, a^{\text{E}}_k, a^{\text{D}}_k\right]^T, \\
-\mathbf q^{\text{world}}_k &= \left[q^0_k, q^1_k, q^2_k, q^3_k\right]^T, \\
+\mathbf p^{\text{world}}_k &= \left[p^{\text{N}}_k, p^{\text{E}}_k, p^{\text{D}}_k\right]^T, \\\\
+\mathbf v^{\text{world}}_k &= \left[v^{\text{N}}_k, v^{\text{E}}_k, v^{\text{D}}_k\right]^T, \\\\
+\mathbf a^{\text{world}}_k &= \left[a^{\text{N}}_k, a^{\text{E}}_k, a^{\text{D}}_k\right]^T, \\\\
+\mathbf q^{\text{world}}_k &= \left[q^0_k, q^1_k, q^2_k, q^3_k\right]^T, \\\\
 \boldsymbol\omega^{\text{world}}_k &= \left[\omega^{\text{N}}_k, \omega^{\text{E}}_k, \omega^{\text{D}}_k\right]^T. \\
 \end{align*}$$
 
-Here, $\mathbf q^{\text{world}}_k$ is a vector representation of the quaternion $\left[q^0_k + i\left(q^1_k\right) + j\left(q^2_k\right) + k\left(q^3_k\right)\right]$. We use quaternions rather than matricies to represent orientation because they let us update our orientation much more easily using the quaternion update function
+Here, $\mathbf q_k^\text{world}$ is a vector representation of the quaternion $\left[q^0_k + i\left(q^1_k\right) + j\left(q^2_k\right) + k\left(q^3_k\right)\right]$. We use quaternions rather than matricies to represent orientation because they let us update our orientation much more easily using the quaternion update function
 $$
 \mathbf q_{k+1} = \mathbf q_k+\frac12dt\cdot\mathbf q_k\otimes\begin{bmatrix}0 \\ \omega^{\text{N}}_k \\ \omega^{\text{E}}_k \\ \omega^{\text{D}}_k\end{bmatrix}.
 $$
@@ -53,7 +53,7 @@ $$
 \mathbf x_k = \left[p^{\text{N}}_k, p^{\text{E}}_k, p^{\text{D}}_k, v^{\text{N}}_k, v^{\text{E}}_k, v^{\text{D}}_k, a^{\text{N}}_k, a^{\text{E}}_k, a^{\text{D}}_k, q^0_k, q^1_k, q^2_k, q^3_k, \omega^{\text{N}}_k, \omega^{\text{E}}_k, \omega^{\text{D}}_k\right]^T.
 $$
 
-# Translating Between Local and World Axes
+## Translating Between Local and World Axes
 
 Our goal is to use our local pitch-roll-yaw coordinate system measurements to estimate the system state in terms of the global coordinate system. A dificulty with calculating acceleration in this manner is that the direction of gravity will change as our local axes rotate, and our accelerometers will not be able to distinguish these orientation changes from actual world acceleration changes. In this section, we take advantage of our information on orientation in order to remedy the issue.
 
@@ -62,8 +62,8 @@ At a given time $k$, we will have the IMU's orientation stored as a quaterion $\
 The rotation matrix $\mathbf C_k$, defined as
 $$
 \mathbf C_k = \begin{bmatrix}
-1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) & 2\big(q^1_k q^2_k - q^0_k q^3_k\big) & 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\
-2\big(q^1_k q^2_k + q^0_k q^3_k\big) & 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) & 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\
+1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) & 2\big(q^1_k q^2_k - q^0_k q^3_k\big) & 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\\\
+2\big(q^1_k q^2_k + q^0_k q^3_k\big) & 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) & 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\\\
 2\big(q^1_k q^3_k - q^0_k q^2_k\big) & 2\big(q^2_k q^3_k + q^0_k q^1_k\big) & 1 - 2\big((q^1_k)^2 + (q^2_k)^2\big)
 \end{bmatrix},
 $$
@@ -100,14 +100,14 @@ $$
 
 Now that we've defined our problem and seen a bit of how our measurment and state variables relate to each other, it's time to build a sensor fusion algorith to estimate state from measurements. We have a variety of options such as complemetary filter, madgwick filter, mahony filter, kalman filter, etc....
 
-# Kalman Filter
+## Kalman Filter
 
 The kalman filter estimates an nx1 column vector state variable ($\mathbf x$), based on some mx1 column vector measurement ($\mathbf z$), using a system model:
 $$
 \begin{align*}
-\text{state transition matrix} &: \mathbf A  &(& \text{nxn matrix}), \\
-\text{process noise covariance} &: \mathbf Q  &(& \text{nxn diagonal matrix}), \\
-\text{measurement covariance} &: \mathbf C  &(& \text{mxm matrix}), \\
+\text{state transition matrix} &: \mathbf A  &(& \text{nxn matrix}), \\\\
+\text{process noise covariance} &: \mathbf Q  &(& \text{nxn diagonal matrix}), \\\\
+\text{measurement covariance} &: \mathbf C  &(& \text{mxm matrix}), \\\\
 \text{measurement model matrix} &: \mathbf H  &(& \text{mxn matrix}).
 \end{align*}
 $$
@@ -117,7 +117,7 @@ After the system model has been set, there are five steps of the simple kalman f
 0. <u>Set initial values</u>
 $$
 \begin{align*}
-\mathbf x_0 &= \text{initial state} &(& \text{nx1 column vector}), \\
+\mathbf x_0 &= \text{initial state} &(& \text{nx1 column vector}), \\\\
 \mathbf P_0 &= \text{initial error covariance} &(& \text{nxn matrix}).
 \end{align*}
 $$
@@ -125,8 +125,8 @@ $$
 1. <u>Predict state and error covariance:</u>
 $$
 \begin{align*}
-\mathbf{\bar x}_k &= \mathbf A \mathbf x_{k-1}, \\
-\mathbf{\bar P}_k &= \mathbf A \mathbf P_{k-1} \mathbf A^T + \mathbf Q.
+\mathbf{\bar x_k} &= \mathbf A \mathbf x_{k-1}, \\\\
+\mathbf{\bar P_k} &= \mathbf A \mathbf P_{k-1} \mathbf A^T + \mathbf Q.
 \end{align*}
 $$
 
@@ -160,22 +160,22 @@ This can be applied to both uni-variate and multi-variate systems, and the notat
 >
 >
 >$
->\begin{array}{|l|l|l|}
->\hline
->\text{Univariate} & \text{Univariate} & \text{Multivariate}\\
->& \text{(Kalman form)} & \\
->\hline
->\bar \mu = \mu + \mu_{f_x} & \bar x = x + dx & \bar{\mathbf x} = \mathbf{Fx} + \mathbf{Bu}\\
->\bar\sigma^2 = \sigma_x^2 + \sigma_{f_x}^2 & \bar P = P + Q & \bar{\mathbf P} = \mathbf{FPF}^\mathsf T + \mathbf Q >\\
->\hline
->\end{array}
->$
+\begin{array}{|l|l|l|}
+\hline
+\text{Univariate} & \text{Univariate} & \text{Multivariate}\\\\
+& \text{(Kalman form)} & \\\\
+\hline
+\bar \mu = \mu + \mu_{f_x} & \bar x = x + dx & \bar{\mathbf x} = \mathbf{Fx} + \mathbf{Bu}\\\\
+\bar\sigma^2 = \sigma_x^2 + \sigma_{f_x}^2 & \bar P = P + Q & \bar{\mathbf P} = \mathbf{FPF}^\mathsf T + \mathbf Q >\\\\
+\hline
+\end{array}
+$
 >
 >Without worrying about the specifics of the linear algebra, we can see that:
->$\mathbf x,\, \mathbf P$ are the state mean and covariance. They correspond to $x$ and $\sigma^2$.
->$\mathbf F$ is the *state transition function*. When multiplied by $\bf x$ it computes the prior.
->$\mathbf Q$ is the process covariance. It corresponds to $\sigma^2_{f_x}$.
->$\mathbf B$ and $\mathbf u$ are new to us. They let us model control inputs to the system.
+$\mathbf x,\, \mathbf P$ are the state mean and covariance. They correspond to $x$ and $\sigma^2$.
+$\mathbf F$ is the *state transition function*. When multiplied by $\bf x$ it computes the prior.
+$\mathbf Q$ is the process covariance. It corresponds to $\sigma^2_{f_x}$.
+$\mathbf B$ and $\mathbf u$ are new to us. They let us model control inputs to the system.
 >
 ><u>**Update**</u>
 >
@@ -183,14 +183,14 @@ This can be applied to both uni-variate and multi-variate systems, and the notat
 >$
 >\begin{array}{|l|l|l|}
 >\hline
->\text{Univariate} & \text{Univariate} & \text{Multivariate}\\
->& \text{(Kalman form)} & \\
+>\text{Univariate} & \text{Univariate} & \text{Multivariate}\\\\
+>& \text{(Kalman form)} & \\\\
 >\hline
->& y = z - \bar x & \mathbf y = \mathbf z - \mathbf{H\bar x} \\
+>& y = z - \bar x & \mathbf y = \mathbf z - \mathbf{H\bar x} \\\\
 >& K = \frac{\bar P}{\bar P+R}&
->\mathbf K = \mathbf{\bar{P}H}^\mathsf T (\mathbf{H\bar{P}H}^\mathsf T + \mathbf R)^{-1} \\
->\mu=\frac{\bar\sigma^2\, \mu_z + \sigma_z^2 \, \bar\mu} {\bar\sigma^2 + \sigma_z^2} & x = \bar x + Ky & \mathbf x = \bar{\mathbf x} + \mathbf{Ky} \\
->\sigma^2 = \frac{\sigma_1^2\sigma_2^2}{\sigma_1^2+\sigma_2^2} & P = (1-K)\bar P & \mathbf P = (\mathbf I -\mathbf{KH})\mathbf{\bar{P}} \\
+>\mathbf K = \mathbf{\bar{P}H}^\mathsf T (\mathbf{H\bar{P}H}^\mathsf T + \mathbf R)^{-1} \\\\
+>\mu=\frac{\bar\sigma^2\, \mu_z + \sigma_z^2 \, \bar\mu} {\bar\sigma^2 + \sigma_z^2} & x = \bar x + Ky & \mathbf x = \bar{\mathbf x} + \mathbf{Ky} \\\\
+>\sigma^2 = \frac{\sigma_1^2\sigma_2^2}{\sigma_1^2+\sigma_2^2} & P = (1-K)\bar P & \mathbf P = (\mathbf I -\mathbf{KH})\mathbf{\bar{P}} \\\\
 >\hline
 >\end{array}
 >$
@@ -211,55 +211,59 @@ This can be applied to both uni-variate and multi-variate systems, and the notat
 
 Lets try applying this to our problem.
 
-# Designing the state: x, P
+## State
 
 The state of the kalman filter is described by state variable $\mathbf x$ and the covariance $\mathbf P$. In this section, we will discuss how to set their initial values. After we set their initial values, our kalman filter will update them internally at each time step.
 
-## x
+### x
 
 As described in the *"Defining our State Variable"* section, we want $\mathbf x$ to be a be a 16x1 vector (though we could simplify it to 13x1 by removing linear acceleration). If we could set our origin at the initial position of the IMU, and we could be fairly certain that it would be stationary and aligned with $N$-$E$-$D$ axes when we start recording data, then a resonable initial state $\mathbf x_0$ might look like:
 $$
 \begin{align*}
-\mathbf p^{\text{world}}_k &= \left[0,0,0\right]^T, \\
-\mathbf v^{\text{world}}_k &= \left[0,0,0\right]^T, \\
-\mathbf a^{\text{world}}_k &= \left[0,0,0\right]^T, \\
-\mathbf q^{\text{world}}_k &= \left[1,0,0,0\right]^T, \\
-\boldsymbol\omega^{\text{world}}_k &= \left[0,0,0\right]^T, \\
+\mathbf p^{\text{world}}_k &= \left[0,0,0\right]^T, \\\\
+\mathbf v^{\text{world}}_k &= \left[0,0,0\right]^T, \\\\
+\mathbf a^{\text{world}}_k &= \left[0,0,0\right]^T, \\\\
+\mathbf q^{\text{world}}_k &= \left[1,0,0,0\right]^T, \\\\
+\boldsymbol\omega^{\text{world}}_k &= \left[0,0,0\right]^T, \\\\
 \implies\mathbf x_0 &= \left[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0\right]^T.
 \end{align*}
 $$
 
-## P
+### P
 
 The state covariance $\mathbf P$ will be a 16x16 (or 13x13) matrix which represents the covariance of the state. A reasonable $\mathbf P_0$ would be:
 $$
 \mathbf P_0 =
 \begin{bmatrix}
-\sigma^2_{p^{\text{N}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & \sigma^2_{p^{\text{E}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & \sigma^2_{p^{\text{D}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & \sigma^2_{v^{\text{N}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & \sigma^2_{v^{\text{E}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & \sigma^2_{v^{\text{D}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{N}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{E}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{a^{\text{D}}_0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^0_0} & 0 & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^1_0} & 0 & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^2_0} & 0 & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{q^3_0} & 0 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{N}}_0} & 0 & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{E}}_0} & 0 \\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma^2_{\omega^{\text{D}}_0} \\
+\sigma_{p_0^{\text{N}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & \sigma_{p_0^{\text{E}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & \sigma_{p_0^{\text{D}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & \sigma_{v_0^{\text{N}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & \sigma_{v_0^{\text{E}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & \sigma_{v_0^{\text{D}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & \sigma_{a_0^{\text{N}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{a_0^{\text{E}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{a_0^{\text{D}}}^2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{q_0^0}^2 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{q_0^1}^2 & 0 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{q_0^2}^2 & 0 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{q_0^3}^2 & 0 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{\omega_0^{\text{N}}}^2 & 0 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{\omega_0^{\text{E}}}^2 & 0 \\\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma_{\omega_0^{\text{D}}}^2 \\\\
 \end{bmatrix},
 $$
 where $\sigma^2_{p^N_0}$ is the variance in the initial position in the north direction, and so on and so forth. As a general rule of thumb, it will be better to overestimate than underestimate - the filter will converge if $\mathbf P_0$ is too large, but might not if it's too small.
 
-# Designing the process: F, Q
+
+{{< callout type="warning" >}}
+  The latex below this point is still being formated.
+{{< /callout >}}
+## Process
 
 The process of the kalman filter is described by $\mathbf F$ (the state transition function) and $\mathbf Q$ (the process covariance).
 
-## F
+### F
 
 There are a few things we want $\mathbf F$ to do.
 
@@ -450,7 +454,7 @@ $$
 
 - *This state transition matrix assumes acceleration at time $t_{k+1}$ will approximately equal acceleration at time $t_k$, which is not necessarily true during jerky events such as heel strike.*
 
-## Q
+### Q
 
 The process noise covariance matrix $\mathbf Q$ represents the uncertainties in the system dynamics. For our state vector, this would look like
 $$
