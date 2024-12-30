@@ -1,6 +1,6 @@
 +++
 date = '2024-12-26T19:08:56-07:00'
 draft = false
-title = 'About'
 +++
-This is the about page
+
+I'm an exercise science student interested in human movement and computer programming.

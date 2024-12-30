@@ -4,4 +4,7 @@ draft = true
 title = 'Biomechanics Projects'
 +++
 
-this is the biomechanics project page
+{{< cards cols=1 >}}
+    {{< card link="/projects/biomechanics/imu-project/" title="📑 IMU Gait Analysis" subtitle="An explanation of IMU data analysis with kalman filters." >}}
+    {{< card link="/projects/biomechanics/human-anatomy/" title="🫀 Human Anatomy" subtitle="A guide to the human musculoskeletal system." >}}
+{{< /cards >}}

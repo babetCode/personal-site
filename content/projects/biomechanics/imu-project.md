@@ -2,7 +2,7 @@
 date = '2024-12-29T16:22:53-07:00'
 draft = true
 title = 'Introduction to Sensor Fusion'
-linktitle = 'Imu Sensor Fusion'
+linktitle = 'IMU Gait Analysis'
 math = true
 +++
 
