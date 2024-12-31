@@ -7,4 +7,6 @@ title = 'Anatomy'
 {{< callout type="warning" >}}
   This page is still under construction.
 {{< /callout >}}
+
 This page will contain info about human anatomy
+
