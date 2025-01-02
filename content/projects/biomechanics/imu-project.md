@@ -525,7 +525,7 @@ $$
 $$
 which expands to
 $$
-\begin{bmatrix}a^{\text{pitch}}_k \\ a^{\text{roll}}_k \\ a^{\text{yaw}}_k\end{bmatrix} =
+\begin{bmatrix}a^{\text{pitch}}_k \\\\ a^{\text{roll}}_k \\\\ a^{\text{yaw}}_k\end{bmatrix} =
 \begin{bmatrix}
 1 - 2\big((q^2_k)^2 + (q^3_k)^2\big) & 2\big(q^1_k q^2_k - q^0_k q^3_k\big) & 2\big(q^1_k q^3_k + q^0_k q^2_k\big) \\\\
 2\big(q^1_k q^2_k + q^0_k q^3_k\big) & 1 - 2\big((q^1_k)^2 + (q^3_k)^2\big) & 2\big(q^2_k q^3_k - q^0_k q^1_k\big) \\\\
@@ -550,19 +550,19 @@ $$
 so that we can write
 $$
 \begin{align*}
-\begin{bmatrix}a^{\text{pitch}}_k \\ a^{\text{roll}}_k \\ a^{\text{yaw}}_k\end{bmatrix} &=
+\begin{bmatrix}a^{\text{pitch}}_k \\\\ a^{\text{roll}}_k \\\\ a^{\text{yaw}}_k\end{bmatrix} &=
 \begin{bmatrix}
 c^0_k & c^1_k & c^2_k \\\\
 c^3_k & c^4_k & c^5_k \\\\
 c^6_k & c^7_k & c^8_k
 \end{bmatrix}^T
-\begin{bmatrix}a^{\text{N}}_k \\ a^{\text{E}}_k \\ a^{\text{D}}_k\end{bmatrix}\\
+\begin{bmatrix}a^{\text{N}}_k \\\\ a^{\text{E}}_k \\\\ a^{\text{D}}_k\end{bmatrix}\\\\
 &= \begin{bmatrix}
 c^0_k & c^3_k & c^6_k \\\\
 c^1_k & c^4_k & c^7_k \\\\
 c^2_k & c^5_k & c^8_k
 \end{bmatrix}
-\begin{bmatrix}a^{\text{N}}_k \\ a^{\text{E}}_k \\ a^{\text{D}}_k\end{bmatrix}
+\begin{bmatrix}a^{\text{N}}_k \\\\ a^{\text{E}}_k \\\\ a^{\text{D}}_k\end{bmatrix}
 \end{align*}
 $$
 From here, we can start to fill in the first three rows of $\mathbf H$:
@@ -574,7 +574,7 @@ $$
 ?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
 ?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?\\\\
 ?&?&?&?&?&?&?&?&?&?&?&?&?&?&?&?
-\end{bmatrix}
+\end{bmatrix}.
 $$
 
 The bottom three rows will be quite similar. In order to find them, we will use
@@ -583,13 +583,13 @@ $$
 $$
 Which expands to 
 $$
-\begin{bmatrix}\omega^{\text{pitch}}_k \\ \omega^{\text{roll}}_k \\ \omega^{\text{yaw}}_k\end{bmatrix} =
+\begin{bmatrix}\omega^{\text{pitch}}_k \\\\ \omega^{\text{roll}}_k \\\\ \omega^{\text{yaw}}_k\end{bmatrix} =
 \begin{bmatrix}
 c^0_k & c^3_k & c^6_k \\\\
 c^1_k & c^4_k & c^7_k \\\\
 c^2_k & c^5_k & c^8_k
 \end{bmatrix}
-\begin{bmatrix}\omega^{\text N}_k \\ \omega^{\text E}_k \\ \omega^{\text D}_k\end{bmatrix},
+\begin{bmatrix}\omega^{\text N}_k \\\\ \omega^{\text E}_k \\\\ \omega^{\text D}_k\end{bmatrix},
 $$
 Meaning our matrix should look like
 $$
