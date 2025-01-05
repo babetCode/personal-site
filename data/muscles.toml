@@ -1,0 +1,19 @@
+[[muscles]]
+name = "occipitalis"
+location = "head, occipitofrontalis, back of skull (left/right)"
+origin = "superior nuchal line of occipital bone, mastoid part of temporal bone"
+insertion = "epicranial aponeurosis"
+artery = "occipital artery"
+nerve = "facial nerve [CNVII], posterior auricular nerve"
+action = "retracts scalp"
+antagonist = "?"
+
+[[muscles]]
+name = "frontalis"
+location = "head, occipitofrontalis, forehead (left/right)"
+origin = "skin of eyebrow and glabella"
+insertion = "epicranial aponeurosis"
+artery = "ophthalmic artery"
+nerve = "facial nerve [CNVII], temporal branch"
+action = "wrinkles eyebrow"
+antagonist = "procerus, corrugator supercilii, and orbicularis oculi muscles"

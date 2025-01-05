@@ -1,0 +1,359 @@
+[[bones]]
+name = "Occipital bone"
+region = "Head"
+subregion = "Cranial"
+landmarks = "External occipital protuberance, Superior nuchal line, Inferior nuchal line, Occipital condyles, Foramen magnum"
+
+[[bones]]
+name = "Parietal bones"
+region = "Head"
+subregion = "Cranial"
+landmarks = "Parietal eminence, Superior temporal line, Inferior temporal line"
+
+[[bones]]
+name = "Frontal bone"
+region = "Head"
+subregion = "Cranial"
+landmarks = "Glabella, Superciliary arches, Supraorbital margin, Frontal sinus"
+
+[[bones]]
+name = "Temporal bones"
+region = "Head"
+subregion = "Cranial"
+landmarks = "Mastoid process, Styloid process, Zygomatic process, External acoustic meatus, Mandibular fossa, Temporal fossa"
+
+[[bones]]
+name = "Sphenoid bone"
+region = "Head"
+subregion = "Cranial"
+landmarks = "Sella turcica, Greater wings, Lesser wings, Pterygoid processes, Sphenoid sinus"
+
+[[bones]]
+name = "Ethmoid bone"
+region = "Head"
+subregion = "Cranial"
+landmarks = "Crista galli, Cribriform plate, Perpendicular plate, Ethmoid sinuses, Superior nasal conchae, Middle nasal conchae"
+
+[[bones]]
+name = "Nasal bones"
+region = "Head"
+subregion = "Facial"
+landmarks = "None specific"
+
+[[bones]]
+name = "Maxilla"
+region = "Head"
+subregion = "Facial"
+landmarks = "Alveolar process, Infraorbital foramen, Maxillary sinus, Palatine process"
+
+[[bones]]
+name = "Lacrimal bone"
+region = "Head"
+subregion = "Facial"
+landmarks = "Lacrimal groove"
+
+[[bones]]
+name = "Zygomatic bone"
+region = "Head"
+subregion = "Facial"
+landmarks = "Temporal process, Frontal process, Maxillary process, Zygomatic arch"
+
+[[bones]]
+name = "Palatine bone"
+region = "Head"
+subregion = "Facial"
+landmarks = "Horizontal plate, Perpendicular plate, Greater palatine foramen"
+
+[[bones]]
+name = "Inferior nasal concha"
+region = "Head"
+subregion = "Facial"
+landmarks = "None specific"
+
+[[bones]]
+name = "Vomer"
+region = "Head"
+subregion = "Facial"
+landmarks = "None specific"
+
+[[bones]]
+name = "Hyoid bone"
+region = "Head"
+subregion = "Facial"
+landmarks = "Body, Greater horns (cornua), Lesser horns (cornua)"
+
+[[bones]]
+name = "Mandible"
+region = "Head"
+subregion = "Facial"
+landmarks = "Ramus, Angle, Body, Mental foramen, Coronoid process, Condylar process, Alveolar process"
+
+[[bones]]
+name = "Malleus"
+region = "Head"
+subregion = "Middle ear"
+landmarks = "Head, Neck, Handle (manubrium)"
+
+[[bones]]
+name = "Incus"
+region = "Head"
+subregion = "Middle ear"
+landmarks = "Body, Short limb, Long limb, Lenticular process"
+
+[[bones]]
+name = "Stapes"
+region = "Head"
+subregion = "Middle ear"
+landmarks = "Head, Neck, Anterior limb, Posterior limb, Base (footplate)"
+
+[[bones]]
+name = "Sternum"
+region = "Chest"
+subregion = "Thorax"
+landmarks = "Manubrium, Body, Xiphoid process, Jugular notch, Sternal angle"
+
+[[bones]]
+name = "Ribs"
+region = "Chest"
+subregion = "Thorax"
+landmarks = "Head, Neck, Tubercle, Angle, Costal groove"
+
+[[bones]]
+name = "Cervical vertebrae"
+region = "Spine"
+subregion = "Vertebral column"
+landmarks = "Transverse foramen, Bifid spinous process (C2-C6), Vertebral foramen"
+
+[[bones]]
+name = "Thoracic vertebrae"
+region = "Spine"
+subregion = "Vertebral column"
+landmarks = "Costal facets, Spinous process, Vertebral foramen"
+
+[[bones]]
+name = "Lumbar vertebrae"
+region = "Spine"
+subregion = "Vertebral column"
+landmarks = "Large body, Spinous process, Vertebral foramen"
+
+[[bones]]
+name = "Sacrum"
+region = "Spine"
+subregion = "Vertebral column"
+landmarks = "Ala, Promontory, Sacral foramina, Sacral canal"
+
+[[bones]]
+name = "Coccyx"
+region = "Spine"
+subregion = "Vertebral column"
+landmarks = "None specific"
+
+[[bones]]
+name = "Ilium"
+region = "Pelvis"
+subregion = "Anterior"
+landmarks = "Iliac crest, Anterior superior iliac spine, Posterior superior iliac spine, Greater sciatic notch"
+
+[[bones]]
+name = "Ischium"
+region = "Pelvis"
+subregion = "Anterior"
+landmarks = "Ischial tuberosity, Ischial spine, Lesser sciatic notch"
+
+[[bones]]
+name = "Pubis"
+region = "Pelvis"
+subregion = "Anterior"
+landmarks = "Pubic symphysis, Pubic tubercle"
+
+[[bones]]
+name = "Humerus"
+region = "Upper limb"
+subregion = "Arm"
+landmarks = "Head, Greater tubercle, Lesser tubercle, Deltoid tuberosity, Medial epicondyle, Lateral epicondyle, Olecranon fossa"
+
+[[bones]]
+name = "Scapula"
+region = "Upper limb"
+subregion = "Pectoral girdle"
+landmarks = "Acromion, Coracoid process, Glenoid cavity, Spine, Supraspinous fossa, Infraspinous fossa, Subscapular fossa"
+
+[[bones]]
+name = "Clavicle"
+region = "Upper limb"
+subregion = "Pectoral girdle"
+landmarks = "Sternal end, Acromial end, Conoid tubercle"
+
+[[bones]]
+name = "Ulna"
+region = "Upper limb"
+subregion = "Lower arm"
+landmarks = "Olecranon, Coronoid process, Trochlear notch, Radial notch, Styloid process"
+
+[[bones]]
+name = "Radius"
+region = "Upper limb"
+subregion = "Lower arm"
+landmarks = "Head, Radial tuberosity, Styloid process, Ulnar notch"
+
+[[bones]]
+name = "Scaphoid bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Lunate bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Triquetral bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Pisiform bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Trapezium"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Trapezoid bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Capitate bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "None specific"
+
+[[bones]]
+name = "Hamate bone"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "Hook of hamate"
+
+[[bones]]
+name = "Metacarpals"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Proximal phalanges (1-5)"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Intermediate phalanges (2-5)"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Distal phalanges (1-5)"
+region = "Upper limb"
+subregion = "Hand"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Femur"
+region = "Lower limb"
+subregion = "Leg"
+landmarks = "Head, Neck, Greater trochanter, Lesser trochanter, Linea aspera, Medial condyle, Lateral condyle"
+
+[[bones]]
+name = "Patella"
+region = "Lower limb"
+subregion = "Leg"
+landmarks = "Base, Apex"
+
+[[bones]]
+name = "Tibia"
+region = "Lower limb"
+subregion = "Leg"
+landmarks = "Medial condyle, Lateral condyle, Tibial tuberosity, Medial malleolus"
+
+[[bones]]
+name = "Fibula"
+region = "Lower limb"
+subregion = "Leg"
+landmarks = "Head, Lateral malleolus"
+
+[[bones]]
+name = "Calcaneus"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Tuberosity, Sustentaculum tali"
+
+[[bones]]
+name = "Talus"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Trochlea, Head, Neck"
+
+[[bones]]
+name = "Navicular bone"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Tuberosity"
+
+[[bones]]
+name = "Medial cuneiform bone"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "None specific"
+
+[[bones]]
+name = "Intermediate cuneiform bone"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "None specific"
+
+[[bones]]
+name = "Lateral cuneiform bone"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "None specific"
+
+[[bones]]
+name = "Cuboid bone"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Tuberosity, Groove for peroneus longus"
+
+[[bones]]
+name = "Metatarsals"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Proximal phalanges (1-5)"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Intermediate phalanges (2-5)"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Base, Shaft, Head"
+
+[[bones]]
+name = "Distal phalanges (1-5)"
+region = "Lower limb"
+subregion = "Foot"
+landmarks = "Base, Shaft, Head"
