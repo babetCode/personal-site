@@ -4,10 +4,6 @@ draft = false
 title = 'Contact'
 +++
 
-{{< callout type="warning" >}}
-  This page is still under construction.
-{{< /callout >}}
-
 {{< rawhtml >}}
 <form name="contact" netlify class="space-y-4 mx-auto">
   <input type="hidden" name="form-name" value="contact">
