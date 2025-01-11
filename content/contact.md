@@ -13,17 +13,17 @@ title = 'Contact'
   <input type="hidden" name="form-name" value="contact">
   
   <div>
-    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+    <label for="name">Name</label>
     <input type="text" id="name" name="name" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
   </div>
 
   <div>
-    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+    <label for="email">Email</label>
     <input type="email" id="email" name="email" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
   </div>
 
   <div>
-    <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+    <label for="message">Message</label>
     <textarea id="message" name="message" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="4"></textarea>
   </div>
 
