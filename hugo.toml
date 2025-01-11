@@ -8,14 +8,7 @@ ignoreFiles = ["themes/hextra/static/*"]
 
 [params.navbar]
 displayTitle = true
-displayLogo = true
-
-[params.navbar.logo]
-path = "images/Calligraphy-B.png"
-link = "/"
-width = 40
-height = 20
-
+displayLogo = false
 
 [[menu.main]]
 name = "Projects"
