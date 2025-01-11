@@ -9,7 +9,7 @@ title = 'Contact'
 {{< /callout >}}
 
 {{< rawhtml >}}
-<form name="contact" method="POST" data-netlify="true" class="space-y-4 mx-auto">
+<form name="contact" netlify class="space-y-4 mx-auto">
   <input type="hidden" name="form-name" value="contact">
   
   <div>
