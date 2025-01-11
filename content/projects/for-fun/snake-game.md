@@ -5,3 +5,7 @@ title = 'Snake Game'
 +++
 
 {{< snake >}}
+
+{{< callout type="warning" >}}
+  This game currently only works with a keyboard.
+{{< /callout >}}
