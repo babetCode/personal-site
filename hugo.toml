@@ -22,11 +22,6 @@ pageRef = "/projects"
 weight = 1
 
 [[menu.main]]
-name = "About"
-pageRef = "/about"
-weight = 2
-
-[[menu.main]]
 name = "Search"
 weight = 3
 [menu.main.params]
