@@ -1,6 +1,7 @@
 +++
 date = '2025-01-11T16:39:43-07:00'
 draft = false
+title = 'My CV'
 +++
 
 {{< rawhtml >}}
@@ -8,7 +9,7 @@ draft = false
 <div class="flex justify-center mb-6">
     <a href="/Adrien-Babet-CV.pdf" download>
         <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
-            Download CV
+            {{< icon "download" >}} Download
         </button>
     </a>
 </div>
