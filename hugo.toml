@@ -25,3 +25,8 @@ name = "Search"
 weight = 3
 [menu.main.params]
 type = "search"
+
+[[menu.main]]
+name = "CV"
+pageRef = "/cv"
+weight = 4
