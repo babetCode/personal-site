@@ -7,4 +7,4 @@ math = true
 
 ![](/images/hero-snow.jpg "Photo by @sean.mackinson")
 
-I’m a snowboarder and exercise science student. I'm interested in human movement and computer programming. I built this as a place to play around with web development, and to keep some of the projects I'm working on. As I continue to add new things to it, they will show in the "Projects" menu.
+I’m a snowboarder and exercise science student. I'm interested in human movement and computer programming. I built this as a place to keep some of the projects I do for fun. As I continue to add new things to it, they will show in the "Projects" menu.
