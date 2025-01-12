@@ -6,9 +6,17 @@ theme = "hextra"
 [module]
 ignoreFiles = ["themes/hextra/static/*"]
 
-[params.navbar]
-displayTitle = true
-displayLogo = false
+[params]
+  [params.navbar]
+    displayTitle = true
+    displayLogo = true
+
+    [params.navbar.logo]
+      path = "custom-favicon.svg"
+      dark = "custom-favicon-dark.svg"
+      link = "/"
+      width = 40
+
 
 [[menu.main]]
 name = "Projects"
