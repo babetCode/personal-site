@@ -17,6 +17,9 @@ ignoreFiles = ["themes/hextra/static/*"]
       link = "/"
       width = 40
 
+[params.fr.navbar.logo]
+  link = "/fr"
+
 
 [[menu.main]]
 identifier = "projects"
