@@ -66,7 +66,7 @@ title = 'My CV'
     </ul>
 
     <h2>Education</h2>
-    <p><strong>Montana State University (Expected Graduation Fall 2026)</strong></p>
+    <p><strong>Montana State University (Expected Graduation Fall 2025)</strong></p>
     <ul>
         <li><em>Kinesiology Major, Concentration on Exercise Science</em></li>
         <li><em>Exercise Science Club member</em></li>
