@@ -37,7 +37,7 @@ title = 'My CV'
 
     <p><strong>The Yellowstone Club (Dec 2022 - Apr 2023, Dec 2023 - Present)</strong></p>
     <ul>
-        <li><em>Snowboard Instructor guiding, and teaching clients of all ages</em></li>
+        <li><em>Snowboard Instructor, guiding and teaching clients of all ages</em></li>
         <li><em>Ensuring safety & wellbeing of clients</em></li>
         <li><em>Ambassador for company image</em></li>
     </ul>
@@ -55,11 +55,11 @@ title = 'My CV'
 
     <p><strong>Santa Cruz City Junior Lifeguards Captain Corps Volunteer (June 2019 - August 2019)</strong></p>
     <ul>
-        <li><em>Ensured safety of groups aged 6-17 during ocean activities</em></li>
+        <li><em>Ensuring safety of groups aged 6-17 during ocean activities</em></li>
         <li><em>Led and supervised ocean safety training for groups aged 6-15 years old</em></li>
     </ul>
 
-    <p><strong>Competitive Freeride Snowboard Athlete (2016-2018)</strong></p>
+    <p><strong>Competitive Freeride Snowboard Athlete (2016-2021)</strong></p>
     <ul>
         <li><em>Kirkwood Mountain Resort Freeride Team, Kirkwood, CA. 2016-2018</em></li>
         <li><em>Squaw Valley Alpine Meadows Big Mountain Snowboard Team, Olympic Valley, CA. 2018-2021</em></li>
