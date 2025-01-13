@@ -56,7 +56,7 @@ title = 'My CV'
     <p><strong>Santa Cruz City Junior Lifeguards Captain Corps Volunteer (June 2019 - August 2019)</strong></p>
     <ul>
         <li><em>Ensuring safety of groups aged 6-17 during ocean activities</em></li>
-        <li><em>Led and supervised ocean safety training for groups aged 6-15 years old</em></li>
+        <li><em>Leading and supervising ocean safety training for groups aged 6-15 years old</em></li>
     </ul>
 
     <p><strong>Competitive Freeride Snowboard Athlete (2016-2021)</strong></p>
